@@ -1,0 +1,96 @@
+accessLog:
+  bufferingSize: 100
+
+log:
+  level: INFO
+
+entryPoints:
+  web:
+    # http
+    address: ":80"
+
+  web-secure:
+    # https
+    address: ":443"
+
+certificatesResolvers:
+  # You can check the state of your certificate rate limiting using this website.
+  # https://tools.letsdebug.net/cert-search?m=domain&q=overflowedminds.net&d=168
+  # https://letsencrypt.org/docs/rate-limits/
+  # The certificates get re-generated either if the container does not have access of an already existing cert (volume)
+  # or if the certificate is about to expire.
+  letsencrypt:
+    # https://docs.traefik.io/master/https/acme/#lets-encrypt
+    acme:
+      # In order to generate certificates while staging testing
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      email: "newlog@overflowedminds.net"
+      storage: /etc/traefik/acme/acme.json
+      # https://docs.traefik.io/master/https/acme/#httpchallenge
+      httpChallenge:
+        entryPoint: web
+
+http:
+  routers:
+    web-router:
+      rule: "Host(`overflowedminds.net`) || Host(`www.overflowedminds.net`)"
+      entryPoints:
+        - web
+      middlewares:
+        - redirect
+        - csrf
+      service: frontend
+
+    web-secure-router:
+      rule: "Host(`overflowedminds.net`) || Host(`www.overflowedminds.net`)"
+      entryPoints:
+        - web-secure
+      middlewares:
+        - csrf
+      service: frontend
+      tls:
+        # https://docs.traefik.io/master/routing/routers/#certresolver
+        certResolver: letsencrypt
+
+    api:
+      # In the traefik Dockerfile we do a manual replacement of DJANGO_ADMIN_URL given that traefik does
+      # not support environment variables in static config files
+      rule: "(Host(`overflowedminds.net`) || Host(`www.overflowedminds.net`))  && (PathPrefix(`/api`) || PathPrefix(`/---DJANGO_ADMIN_URL---`))"
+      entryPoints:
+        - web-secure
+      middlewares:
+        - csrf
+      service: django
+      tls:
+        # https://docs.traefik.io/master/routing/routers/#certresolver
+        certResolver: letsencrypt
+
+  middlewares:
+    redirect:
+      # https://docs.traefik.io/master/middlewares/redirectscheme/
+      redirectScheme:
+        scheme: https
+        permanent: true
+    csrf:
+      # https://docs.traefik.io/master/middlewares/headers/#hostsproxyheaders
+      # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+      headers:
+        hostsProxyHeaders: ["X-CSRFToken"]
+
+  services:
+    frontend:
+      loadBalancer:
+        passHostHeader: false  # This needs to be added, otherwise when the request is forwarded to S3, it looks for a <host> bucket
+        servers:
+          - url: "http://overflowedminds-static-public.s3-website-us-east-1.amazonaws.com"
+    django:
+      loadBalancer:
+        passHostHeader: true  # www.overflowedminds.net is passed to the django service
+        servers:
+          - url: "http://django:5000"
+
+providers:
+  # https://docs.traefik.io/master/providers/file/
+  file:
+    filename: /etc/traefik/traefik.yml
+    watch: true

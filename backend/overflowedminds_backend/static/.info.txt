@@ -1,0 +1,5 @@
+Inside this directory, the react files generated on built (index.html, static, etc) will be placed.
+Once the collectstatic django command is executed (on prod deployment), this files will be moved to the S3 bucket
+from where they will be served. The bucket is specially configured to serve a website.
+
+All this process happens inside the "django" docker container.

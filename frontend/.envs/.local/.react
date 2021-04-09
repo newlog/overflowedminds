@@ -1,0 +1,3 @@
+REACT_APP_PROD=false
+# allow for hot reloading
+CHOKIDAR_USEPOLLING=true

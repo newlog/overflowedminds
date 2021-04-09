@@ -1,0 +1,73 @@
+version: '3'
+
+volumes:
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  production_traefik: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: compose/production/django/Dockerfile
+    image: overflowedminds_production_django
+    depends_on:
+      - postgres
+      - redis
+      - frontend
+    env_file:
+      - backend/.envs/.production/.django
+      - backend/.envs/.production/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: compose/production/postgres/Dockerfile
+    image: overflowedminds_production_postgres
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data:Z
+      - production_postgres_data_backups:/backups:z
+    env_file:
+      - backend/.envs/.production/.postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: compose/production/frontend/Dockerfile
+    image: overflowedminds_production_frontend
+    env_file:
+      - frontend/.envs/.local/.react
+
+  traefik:
+    build:
+      context: .
+      dockerfile: compose/production/traefik/Dockerfile
+    image: overflowedminds_production_traefik
+    restart: always
+    depends_on:
+      - django
+    volumes:
+      # this is necessary so the certificate generated in the container persists on container restarts
+      # and traefik does not request new certificates for every restart (as long as the volume exists)
+      - production_traefik:/etc/traefik/acme:z
+      # Required for Traefik to listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - backend/.envs/.production/.traefik
+    command: /start
+
+  redis:
+    image: redis:5.0
+  
+  awscli:
+    build:
+      context: .
+      dockerfile: compose/production/aws/Dockerfile
+    env_file:
+      - backend/.envs/.production/.django
+    volumes:
+      - production_postgres_data_backups:/backups:z

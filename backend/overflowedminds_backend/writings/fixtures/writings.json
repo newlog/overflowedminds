@@ -1,0 +1,46 @@
+[
+  {
+    "model": "writings.writing",
+    "pk": "ec9afe01-63c1-4995-a386-5c13331eb0c9",
+    "fields": {
+      "created": "2020-12-15T19:25:52.249Z",
+      "modified": "2020-12-15T19:25:52.249Z",
+      "title": "Unpacking Malware using r2",
+      "description": "The idea of the training was to go through different malware samples and explain several approaches one could take to unpack them, focusing on different strategies instead of focusing only on the specific steps.\r\n\r\nThe training was completely hands-on therefore the workflow was to let the attendees attempt each sample and slowly but surely (each N minutes) advance one slide at a time showing them one more clue about how to unpack the sample.",
+      "publication_date": "2017-09-11T19:23:12Z",
+      "url": "https://github.com/newlog/r2_malware_unpacking_training",
+      "tags": [
+        "71f87b14-a8af-43a3-afe8-e12c02121de0",
+        "a4fdee7f-c568-4072-8612-81fe7a94cb2f",
+        "ce19167a-2bc0-40b7-9e28-47fcf3849225",
+        "e3eca662-67a2-4f04-89d5-28d50cc09627"
+      ]
+    }
+  },
+  {
+    "model": "writings.writing",
+    "pk": "392ed441-75fb-4912-be80-6780e0abb4c4",
+    "fields": {
+      "created": "2020-12-15T19:25:52.249Z",
+      "modified": "2020-12-15T19:25:52.249Z",
+      "title": "Introduction to Software Exploitation in Linux Systems",
+      "description": "",
+      "publication_date": "2011-01-01T19:23:12Z",
+      "url": "https://github.com/newlog/college/tree/master/papers",
+      "tags": []
+    }
+  },
+  {
+    "model": "writings.writing",
+    "pk": "832c735b-7809-40f8-9066-534b16ba4ec9",
+    "fields": {
+      "created": "2020-12-15T19:25:52.249Z",
+      "modified": "2020-12-15T19:25:52.249Z",
+      "title": "Study and exploitation of the dynamic memory management in GNU/Linux systems",
+      "description": "",
+      "publication_date": "2012-01-01T19:23:12Z",
+      "url": "https://github.com/newlog/college/tree/master/papers",
+      "tags": []
+    }
+  }
+]

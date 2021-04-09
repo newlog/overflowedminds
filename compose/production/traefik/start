@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# We need to manually execute traefik (not like in all examples on the internet) because we are using an entrypoint
+# in the dockerfile. we are using the entrypoint script because we need to modify a file inside the traefik container
+# using the value stored in an env var. The only way of doing that is with the combo "entrypoint in dockerfile" and
+# "command in the docker-compose (or CMD in the dockerfile after the entrypoint)".
+traefik

@@ -1,0 +1,21 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "argon2$argon2i$v=19$m=512,t=2,p=2$MFRkZUw3cDM1RWlI$21fF2C5nhrc4EuOFOE/NAw",
+      "last_login": "2020-12-08T21:05:56.863Z",
+      "is_superuser": true,
+      "username": "newlog",
+      "first_name": "",
+      "last_name": "",
+      "email": "newlog@overflowedminds.net",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2020-12-08T21:04:19.232Z",
+      "name": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

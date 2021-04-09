@@ -1,0 +1,128 @@
+[
+  {
+    "model": "writings.tag",
+    "pk": "1f444ca3-46e7-4e6b-9d83-797c7720635b",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "paper"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "4e7d9d13-152d-4bd7-b083-fd1736b987d4",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "course"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "5dac7d38-4fb2-499f-8ed6-fd178dc9fcd6",
+    "fields": {
+      "created": "2020-12-13T23:40:47.002Z",
+      "modified": "2020-12-13T23:40:47.002Z",
+      "name": "att&ck"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "68ea3504-fad9-49b7-a736-d610d5d66009",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "talk"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "71f87b14-a8af-43a3-afe8-e12c02121de0",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "reverse_engineering"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "8146986e-58cc-40ae-911c-ec687dcfde29",
+    "fields": {
+      "created": "2020-12-13T23:40:22.154Z",
+      "modified": "2020-12-13T23:40:22.154Z",
+      "name": "powershell"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "87c6fd3a-ed9d-48d3-a817-cb51859e174d",
+    "fields": {
+      "created": "2020-12-13T23:40:38.038Z",
+      "modified": "2020-12-13T23:40:38.038Z",
+      "name": "post-exploitation"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "a4fdee7f-c568-4072-8612-81fe7a94cb2f",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "windows"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "b8be4a85-b657-480a-9e65-e74c5f4f3ef0",
+    "fields": {
+      "created": "2020-12-13T23:39:56.169Z",
+      "modified": "2020-12-13T23:40:07.484Z",
+      "name": "browser"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "b9712424-fbfb-4df0-8ff2-a071a3036541",
+    "fields": {
+      "created": "2020-12-13T23:40:27.836Z",
+      "modified": "2020-12-13T23:40:27.836Z",
+      "name": "obfuscation"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "ce19167a-2bc0-40b7-9e28-47fcf3849225",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "slides"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "d186a7c8-8194-4a54-8763-779d721689ed",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "heap"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "d4e64641-0f8f-4d09-a29c-4cfa0be0d8e9",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "exploiting"
+    }
+  },
+  {
+    "model": "writings.tag",
+    "pk": "e3eca662-67a2-4f04-89d5-28d50cc09627",
+    "fields": {
+      "created": "2020-12-08T21:04:19.232Z",
+      "modified": "2020-12-08T21:04:19.232Z",
+      "name": "training"
+    }
+  }
+]

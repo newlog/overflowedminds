@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=overflowedminds_backend
+POSTGRES_USER=SlXrpjtbpqYVuCbmRVfaNJQGVxRHZZBg
+POSTGRES_PASSWORD=VQNaClF8HY1X2OMT2AATs304XoMSvrRLWmPnmrq8LiwNdbhy6wXuFj3DHnOuLyoN

@@ -1,0 +1,74 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_local_django
+    container_name: django
+    depends_on:
+      - postgres
+      - frontend
+    volumes:
+      - ./backend:/app:z
+    env_file:
+      - backend/.envs/.local/.django
+      - backend/.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: compose/production/postgres/Dockerfile
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_postgres
+    container_name: postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    env_file:
+      - backend/.envs/.local/.postgres
+    # This is custom added to connect to the DB from outside docker
+    ports:
+      - "6666:5432"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: compose/local/frontend/Dockerfile
+    image: overflowedminds_production_frontend
+    stdin_open: true  # because npm start opens a browser, we need to instantiate the container in interactive mode
+    volumes:
+      - ./frontend/:/app
+      # the node_modules directory would be overwritten by the mounting of the host directory at runtime.
+      # 1. the node_modules directory would be overwritten by the mounting of the host directory at runtime.
+      # 2. The current directory is mounted into the container, overwriting the node_modules that were installed during the build.
+      - /app/node_modules
+    env_file:
+      - frontend/.envs/.local/.react
+    command: |
+      npm start
+    ports:
+      - '3000:3000'
+
+  docs:
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_local_docs
+    container_name: docs
+    build:
+      context: .
+      dockerfile: compose/local/docs/Dockerfile
+    env_file:
+      - backend/.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./backend:/app/backend:z
+    ports:
+      - "7000:7000"
+    command: /start-docs
