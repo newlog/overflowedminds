@@ -4,12 +4,6 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-if [ ! -f .initialized ]; then
-    echo "Initializing container"
-    # run initializing commands
-    touch .initialized
-fi
-
 sed -i 's.---DJANGO_ADMIN_URL---.'${DJANGO_ADMIN_URL}'.g' /etc/traefik/traefik.yml
 
 exec "$@"
