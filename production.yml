@@ -37,7 +37,7 @@ services:
       dockerfile: compose/production/frontend/Dockerfile
     image: overflowedminds_production_frontend
     env_file:
-      - frontend/.envs/.local/.react
+      - frontend/.envs/.production/.react
 
   traefik:
     build:
