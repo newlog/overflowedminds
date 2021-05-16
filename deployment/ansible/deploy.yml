@@ -1,2 +1,5 @@
-- name: test playbook
-    command: echo "Test" > /home/ubuntu/ansible.out
+- hosts:
+  - all
+  tasks:
+    - name: test playbook
+      command: echo "Test" > /home/ubuntu/ansible.out
