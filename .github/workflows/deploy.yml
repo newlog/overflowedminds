@@ -1,0 +1,33 @@
+name: Overflowedminds Deployment
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: "$PWD/../../deployment/ansible/deploy.yml"
+          directory: ./
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [all]
+            overflowedminds.net
+
+            [group1]
+            overflowedminds.net
+          options: |
+            --limit group1
+            --verbose
+
