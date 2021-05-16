@@ -2,9 +2,9 @@ name: Overflowedminds Deployment
 
 on:
   push:
-    branches: [ master ]
+    branches: [ feature/gh-action ]
   pull_request:
-    branches: [ master ]
+    branches: [ feature/gh-action ]
 
 jobs:
   build:
@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Debug
+        run: echo "${PWD}"
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
