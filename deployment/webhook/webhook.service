@@ -1,0 +1,37 @@
+# SETTING UP SERVICE
+# $ cp webhook.service /usr/lib/systemd/system
+# $ systemctl enable webhook.service
+# $ systemctl start webhook.service
+# $ service webhooks status
+# UNINSTALLING SERVICE
+# $ systemctl stop [servicename]
+# $ systemctl disable [servicename]
+# $ rm /etc/systemd/system/[servicename]
+# $ rm /etc/systemd/system/[servicename] # and symlinks that might be related
+# $ rm /usr/lib/systemd/system/[servicename]
+# $ rm /usr/lib/systemd/system/[servicename] # and symlinks that might be related
+# $ systemctl daemon-reload
+# $ systemctl reset-failed
+
+[Unit]
+Description=Webhook service
+ConditionPathExists=/home/ubuntu/webhooks
+After=network.target
+
+# if restarted on failure, only allow for 5 more restarts and give up afterwards
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+
+# restart on failure but wait 10 seconds
+Restart=on-failure
+RestartSec=10
+
+WorkingDirectory=/home/ubuntu
+ExecStart=/home/ubuntu/webhooks/webhook.sh
+
+[Install]
+WantedBy=multi-user.target
