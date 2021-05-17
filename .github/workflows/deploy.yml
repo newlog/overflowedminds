@@ -7,7 +7,7 @@ on:
     branches: [ feature/gh-action ]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -17,22 +17,23 @@ jobs:
 
       - name: Debug
         run: echo "${PWD}"
-      - run: ls -la "${PWD}"
-      - run: ls -la "${PWD}/deployment"
-      - run: ls -la "${PWD}/deployment/ansible"
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+      - name: 'deployment pending'
+        uses: 'deliverybot/deployment-status@v1'
         with:
-          playbook: "${PWD}/deployment/ansible/deploy.yml"
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          inventory: |
-            [all]
-            overflowedminds.net
+          state: 'pending'
+          token: '${{ github.token }}'
 
-            [group1]
-            overflowedminds.net
-          options: |
-            --limit group1
-            --verbose
+	  - name: 'deployment success'
+		if: success()
+		uses: 'deliverybot/deployment-status@v1'
+		with:
+		  state: 'success'
+		  token: '${{ github.token }}'
 
+	  - name: 'deployment failure'
+		if: failure()
+		uses: 'deliverybot/deployment-status@v1'
+		with:
+		  state: 'failure'
+		  token: '${{ github.token }}'
