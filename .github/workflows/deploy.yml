@@ -20,20 +20,23 @@ jobs:
 
       - name: 'deployment pending'
         uses: 'deliverybot/deployment-status@v1'
+        id: 'test'
         with:
           state: 'pending'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ github.token }}'
 
       - name: 'deployment success'
         #if: success()
         uses: 'deliverybot/deployment-status@v1'
+        id: 'test'
         with:
           state: 'success'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ github.token }}'
 
       - name: 'deployment failure'
         #if: failure()
+        id: 'test'
         uses: 'deliverybot/deployment-status@v1'
         with:
           state: 'failure'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ github.token }}'
