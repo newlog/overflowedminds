@@ -28,14 +28,14 @@ jobs:
       - name: 'deployment success'
         #if: success()
         uses: 'deliverybot/deployment-status@v1'
-        id: 'test'
+        id: 'test 2'
         with:
           state: 'success'
           token: '${{ github.token }}'
 
       - name: 'deployment failure'
         #if: failure()
-        id: 'test'
+        id: 'test 3'
         uses: 'deliverybot/deployment-status@v1'
         with:
           state: 'failure'
