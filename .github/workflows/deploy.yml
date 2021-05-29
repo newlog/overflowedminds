@@ -17,29 +17,3 @@ jobs:
 
       - name: Debug
         run: echo "${PWD}"
-
-      - name: 'deployment pending'
-        uses: 'newlog/deployment-status-update@0.2.0'
-        with:
-          status: 'pending'
-          run_id: '${{ github.run_id }}'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: 'deployment success'
-        if: success()
-        uses: 'newlog/deployment-status-update@0.2.0'
-        with:
-          status: 'success'
-          run_id: '${{ github.run_id }}'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: 'deployment failure'
-        if: failure()
-        uses: 'newlog/deployment-status-update@0.2.0'
-        with:
-          status: 'failure'
-          run_id: '${{ github.run_id }}'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'

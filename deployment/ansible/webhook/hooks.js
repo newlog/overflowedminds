@@ -14,7 +14,7 @@
           "match":
           {
             "type": "payload-hash-sha1",
-            "secret": "{{ getenv "GITHUB_SECRET" | js }}",
+            "secret": "{{ getenv 'GITHUB_SECRET' | js }}",
             "parameter":
             {
               "source": "header",
@@ -26,7 +26,7 @@
           "match":
           {
             "type": "value",
-            "value": "tag",
+            "value": "refs/heads/feature/gh-action",
             "parameter":
             {
               "source": "payload",
