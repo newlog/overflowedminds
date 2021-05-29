@@ -20,18 +20,18 @@ jobs:
 
       - name: 'deployment pending'
         uses: 'deliverybot/deployment-status@v1'
-        id: '${{ github.run_id }}'
+        id: ${{ github.run_id }}
         with:
           state: 'pending'
-          token: '${{ github.token }}'
+          token: ${{ github.token }}
 
       - name: 'deployment success'
         #if: success()
         uses: 'deliverybot/deployment-status@v1'
-        id: '${{ github.run_id }}'
+        id: ${{ github.run_id }}
         with:
           state: 'success'
-          token: '${{ github.token }}'
+          token: ${{ github.token }}
 
       - name: 'deployment failure'
         #if: failure()
@@ -39,4 +39,4 @@ jobs:
         uses: 'deliverybot/deployment-status@v1'
         with:
           state: 'failure'
-          token: '${{ github.token }}'
+          token: ${{ github.token }}
