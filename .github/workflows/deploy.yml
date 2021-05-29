@@ -19,21 +19,25 @@ jobs:
         run: echo "${PWD}"
 
       - name: 'deployment pending'
-        uses: 'deliverybot/deployment-status@v1'
+        uses: 'newlog/deployment-status-update@0.2.0'
         with:
           state: 'pending'
           token: '${{ github.token }}'
 
       - name: 'deployment success'
         if: success()
-        uses: 'deliverybot/deployment-status@v1'
+        uses: 'newlog/deployment-status-update@0.2.0'
         with:
-          state: 'success'
-          token: '${{ github.token }}'
+          status: 'success'
+          run_id: '${{ github.run_id }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: 'deployment failure'
         if: failure()
-        uses: 'deliverybot/deployment-status@v1'
+        uses: 'newlog/deployment-status-update@0.2.0'
         with:
           state: 'failure'
-          token: '${{ github.token }}'
+          run_id: '${{ github.run_id }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
