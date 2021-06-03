@@ -10,7 +10,7 @@ services:
     build:
       context: .
       dockerfile: compose/production/django/Dockerfile
-    image: overflowedminds_production_django
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_django
     depends_on:
       - postgres
       - redis
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: compose/production/postgres/Dockerfile
-    image: overflowedminds_production_postgres
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data:Z
       - production_postgres_data_backups:/backups:z
@@ -35,7 +35,7 @@ services:
     build:
       context: .
       dockerfile: compose/production/frontend/Dockerfile
-    image: overflowedminds_production_frontend
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_frontend
     env_file:
       - frontend/.envs/.production/.react
 
@@ -43,7 +43,7 @@ services:
     build:
       context: .
       dockerfile: compose/production/traefik/Dockerfile
-    image: overflowedminds_production_traefik
+    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_traefik
     restart: always
     depends_on:
       - django
@@ -67,6 +67,7 @@ services:
     build:
       context: .
       dockerfile: compose/production/aws/Dockerfile
+    #image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_awscli
     env_file:
       - backend/.envs/.production/.django
     volumes:
