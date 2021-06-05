@@ -34,8 +34,8 @@ jobs:
         run: |
           #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG production.yml
           #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker compose -f production.yml build
-          docker compose -f production.yml push
+          docker-compose -f production.yml build
+          docker-compose -f production.yml push
 
 #      - name: Build 
 #        run: "${PWD}/deployment/deploy_remote_prod.sh"
