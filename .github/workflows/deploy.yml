@@ -43,3 +43,13 @@ jobs:
           #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker-compose -f production.yml build
           docker-compose -f production.yml push
+
+      - name: Create Release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
