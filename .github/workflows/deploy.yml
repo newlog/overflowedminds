@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create env files
-        run: python3 "{PWD}/deployment/create_env_files.py"
+        run: python3 "${PWD}/deployment/create_env_files.py"
         env:
           DJANGO_ENV: ${{secrets.DJANGO_ENV}}
           POSTGRES_ENV: ${{secrets.POSTGRES_ENV}}
