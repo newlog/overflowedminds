@@ -1,4 +1,4 @@
-FROM 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production/frontend AS frontend
+FROM 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_production AS frontend
 
 FROM python:3.8-slim-buster
 
