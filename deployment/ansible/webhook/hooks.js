@@ -1,7 +1,7 @@
 [
   {
-    "id": "simple-pull",
-    "execute-command": "/home/ubuntu/webhook/commands/update-overflowedminds.sh",
+    "id": "update-overflowedminds",
+    "execute-command": "/home/ubuntu/webhooks/commands/update-overflowedminds.sh",
     "pass-arguments-to-command": [
       {
         "source": "payload",
@@ -14,7 +14,7 @@
           "match":
           {
             "type": "payload-hash-sha1",
-            "secret": "{{ getenv 'GITHUB_SECRET' | js }}",
+            "secret": "{{ getenv "GITHUB_SECRET" | js }}",
             "parameter":
             {
               "source": "header",
@@ -26,7 +26,19 @@
           "match":
           {
             "type": "value",
-            "value": "refs/heads/feature/gh-action",
+            "value": "refs/heads/master",
+            "parameter":
+            {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        },
+        {
+          "match":
+          {
+            "type": "value",
+            "value": "tag",
             "parameter":
             {
               "source": "payload",
