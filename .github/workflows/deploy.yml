@@ -44,12 +44,15 @@ jobs:
           docker-compose -f production.yml build
           docker-compose -f production.yml push
 
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-12`" >> $GITHUB_ENV
+
       - name: Create Release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
+          tag_name: ${SHORT_SHA}
+          release_name: Release ${SHORT_SHA}
           draft: false
           prerelease: false
