@@ -26,18 +26,6 @@
           "match":
           {
             "type": "value",
-            "value": "refs/heads/master",
-            "parameter":
-            {
-              "source": "payload",
-              "name": "ref"
-            }
-          }
-        },
-        {
-          "match":
-          {
-            "type": "value",
             "value": "tag",
             "parameter":
             {
