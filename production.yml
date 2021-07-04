@@ -67,7 +67,6 @@ services:
     build:
       context: .
       dockerfile: compose/production/aws/Dockerfile
-    #image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_awscli
     env_file:
       - backend/.envs/.production/.django
     volumes:

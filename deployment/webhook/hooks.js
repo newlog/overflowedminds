@@ -2,12 +2,6 @@
   {
     "id": "update-overflowedminds",
     "execute-command": "/home/ubuntu/webhooks/commands/update-overflowedminds.sh",
-    "pass-arguments-to-command": [
-      {
-        "source": "payload",
-        "name": "repository.name"
-      }
-    ],
     "trigger-rule": {
       "and": [
         {

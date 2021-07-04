@@ -33,8 +33,6 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: 282428440465.dkr.ecr.us-east-1.amazonaws.com
           IMAGE_TAG: ${{ github.sha }}
         run: |
           #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -42,9 +40,9 @@ jobs:
           docker-compose -f production.yml build
           docker-compose -f production.yml push
 
-      - name: Get short commit SHA
+      - name: Get short commit SHA as v.hash
         id: short_sha_step
-        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=short_sha::v.$(git rev-parse --short HEAD)"
 
       - name: Create Release
         uses: actions/create-release@latest
