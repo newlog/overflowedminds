@@ -2,7 +2,7 @@ name: Overflowedminds Deployment
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, hotfix/remove_unnecessary_code ]
 
 jobs:
   deploy:
@@ -40,9 +40,9 @@ jobs:
           docker-compose -f production.yml build
           docker-compose -f production.yml push
 
-      - name: Get short commit SHA
+      - name: Get short commit SHA as v.hash
         id: short_sha_step
-        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=short_sha::v.$(git rev-parse --short HEAD)"
 
       - name: Create Release
         uses: actions/create-release@latest
