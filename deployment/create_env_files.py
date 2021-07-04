@@ -20,7 +20,4 @@ def create_env_files():
 
 
 if __name__ == '__main__':
-    os.environ['DJANGO_ENV'] = 'DJANGO'
-    os.environ['TRAEFIK_ENV'] = 'TRAEFIK'
-    os.environ['POSTGRES_ENV'] = 'POSTGRES'
     create_env_files()
