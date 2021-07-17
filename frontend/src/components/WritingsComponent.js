@@ -147,10 +147,20 @@ const useRowStyles = makeStyles({
       },
       maxWidth: '60vw',
       maxHeight: '80vh',
-      marginTop: '-15vh'
+      marginTop: '-15vh',
     },
     displayLinebreak: {
         whiteSpace: 'pre-line',
+    },
+    tableHead: {
+        backgroundColor: 'rgb(40, 39, 41)'
+    },
+    tableBody: {
+        "&> :hover": {
+            backgroundColor: "#333",
+            textDecorationColor: '#679'
+          }
+
     }
   });
   
@@ -236,19 +246,19 @@ const Writings = () => {
                     {isLoading && <div>Loading ...</div>}
                     {error && <div>Something went wrong ...</div>}
                     {writings.length !== 0 &&
-                        <TableContainer component={Paper} className={classes.root}>
+                        <TableContainer className={classes.root}>
                             <Table aria-label="collapsible table">
-                                <TableHead>
+                                <TableHead className={classes.tableHead}>
                                     <TableRow>
-                                        <TableCell align="left">title</TableCell>
-                                        <TableCell align="left">published</TableCell>
-                                        <TableCell align="right">tags</TableCell>
-                                        <TableCell align="right">+info</TableCell>
+                                        <TableCell align="left">TITLE</TableCell>
+                                        <TableCell align="left">PUBLISHED</TableCell>
+                                        <TableCell align="right">TAGS</TableCell>
+                                        <TableCell align="right">+INFO</TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                                <TableBody className={classes.tableBody}>
                                     {writings.map((row) => (
-                                        <Row key={row.id} row={row}/>
+                                        <Row key={row.id} row={row} />
                                     ))}
                                 </TableBody>
                             </Table>
