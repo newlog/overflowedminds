@@ -5,6 +5,7 @@ import Menu from './LeftMenuComponent';
 import '../App.css'
 import Footer from './FooterComponent';
 import Writings from './WritingsComponent';
+import WritingDetails from './WritingDetailsComponent';
 
 
 class Main extends Component {
@@ -17,7 +18,8 @@ class Main extends Component {
                 <Menu />
                 <Switch location={location}>
                     <Route path="/home" component={HomePage} />
-                    <Route path="/writings" component={Writings} />
+                    <Route path="/writings" exact={true} component={Writings} />
+                    <Route path="/writings/:writingSlug" component={WritingDetails} />
                     <Redirect to="/home" />
                 </Switch>
                 <Footer />

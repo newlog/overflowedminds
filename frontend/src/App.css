@@ -45,6 +45,20 @@
   animation: text-focus-in 1s ease-in both;
 }
 
+.writingDetails {
+  font-family:  'Open Sans', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 16px;
+}
+
+.writingTitle {
+  color: palevioletred;
+  font-weight: 600;
+  font-size: 38px;
+  padding-bottom: 25px;
+}
+
 .footer {
   height: 5vh;
 }

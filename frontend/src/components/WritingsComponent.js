@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,7 +13,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
-import { Remarkable } from 'remarkable';
+import ReactMarkdown from 'react-markdown';
 import '../App.css';
 import Header from './HeaderComponent';
 import baseUrl from '../shared/baseUrl';
@@ -169,13 +168,15 @@ function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
-    let md = new Remarkable();
+
+    const slug = row.writing_path.substring(row.writing_path.lastIndexOf('/') + 1)
+    const url = row.internal ? `writings/${slug}` : row.url
   
     return (
       <>
         <TableRow className={classes.root}>
             <TableCell align="left">
-                <Link href={row.url || "#"} underline="none" color="inherit"><b>{row.title}</b></Link>
+                <Link href={url || "#"} underline="none" color="inherit"><b>{row.title}</b></Link>
             </TableCell>
             <TableCell align="right">
                 {
@@ -200,7 +201,7 @@ function Row(props) {
               <Box>
                 <TableCell align="left" style={{ border: 'none' }} />
                 <TableCell align="left" style={{ border: 'none' }}>
-                    <div dangerouslySetInnerHTML={{__html: md.render(row.description || "No Description.")}} />
+                    <ReactMarkdown>{ row.description || "No Description." }</ReactMarkdown>
                 </TableCell>
               </Box>
             </Collapse>
