@@ -15,7 +15,7 @@ def migrate_data_forward(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('writings', '0002_auto_20201213_2336'),
+        ('writings', '0005_writing_internal'),
     ]
 
     operations = [
