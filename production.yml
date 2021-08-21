@@ -1,8 +1,6 @@
 version: '3'
 
 volumes:
-  production_postgres_data: {}
-  production_postgres_data_backups: {}
   production_traefik: {}
 
 services:
@@ -12,24 +10,12 @@ services:
       dockerfile: compose/production/django/Dockerfile
     image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_django
     depends_on:
-      - postgres
       - redis
       - frontend
     env_file:
       - backend/.envs/.production/.django
       - backend/.envs/.production/.postgres
     command: /start
-
-  postgres:
-    build:
-      context: .
-      dockerfile: compose/production/postgres/Dockerfile
-    image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_postgres
-    volumes:
-      - production_postgres_data:/var/lib/postgresql/data:Z
-      - production_postgres_data_backups:/backups:z
-    env_file:
-      - backend/.envs/.production/.postgres
 
   frontend:
     build:
