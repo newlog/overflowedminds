@@ -26,6 +26,7 @@ class Writing(TimeStampedModel):
     internal = models.BooleanField(default=False)
     url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField('Tag', default=None)
+    likes = models.PositiveIntegerField(default=0)
 
     # noinspection PyMethodMayBeStatic
     def slugify_function(self, content):

@@ -5,7 +5,7 @@ from overflowedminds_backend.writings.models import Writing, Tag
 class TagsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class WritingsListSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class WritingsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Writing
         # no body field
-        fields = ['title', 'description', 'publication_date', 'url', 'tags', 'writing_path', 'internal']
+        fields = ['id', 'title', 'slug', 'description', 'publication_date', 'url', 'tags', 'writing_path', 'internal', 'likes']
         lookup_field = 'slug'
 
 

@@ -87,3 +87,40 @@
     opacity: 1;
   }
 }
+
+/*
+Styles for LIKE Button
+
+CSS way of changing the content of a DOM element on hover.
+You keep the content empty (in WritingsComponent.js), then with CSS <class>::before you set it to X
+and then with <class>:hover::before you set it to Y.
+*/
+.material-icons-outlined.like::before {
+  content: 'favorite_border';
+}
+
+.material-icons-outlined.like:hover::before {
+  content: 'favorite';
+}
+
+.material-icons-outlined.like.likeClicked::before {
+  content: 'favorite';
+}
+
+.material-icons-outlined.like.likeClicked {
+  animation: zoom-and-disappear 1s;
+}
+
+@keyframes zoom-and-disappear {
+  0% {
+    transform: scale(100%);
+  }
+  50% {
+    filter: blur(5px);
+    transform: scale(250%);
+  }
+  100% {
+    transform: scale(100%);
+    
+  }
+}

@@ -1,7 +1,6 @@
 
 export default function isProd()
 {
-    console.log(!process.env.REACT_APP_PROD || process.env.REACT_APP_PROD === 'true');
     return !process.env.REACT_APP_PROD || process.env.REACT_APP_PROD === 'true';
 }
 
