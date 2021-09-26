@@ -47,7 +47,7 @@ const useRowStyles = makeStyles({
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-    const [likeClicked, setLikeClicked] = React.useState(false);
+    const [likeClicked, setLikeClicked] = React.useState(row.liked_by_current_user);
     const [likes, setLikes] = React.useState(row.likes_count);
 
     const classes = useRowStyles();
@@ -64,9 +64,7 @@ function Row(props) {
         })
         .then(res => res.json())
         .then(res => setLikes(res.likes_count))
-        .catch(err => console.log(err));
-        
-        //animateLike()
+        .catch(err => console.log(err));        
     }
 
     return (

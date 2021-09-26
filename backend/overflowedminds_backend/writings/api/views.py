@@ -24,6 +24,10 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
             return self.action_serializers.get(self.action, self.serializer_class)
         return super(WritingsViewSet, self).get_serializer_class()
 
+    def list(self, request, *args, **kwargs):
+        serializer = WritingsListSerializer(self.queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
     @action(detail=True, methods=['POST'], name='Like a writing')
     def like(self, request, slug):
         anonymized_user_id = self.compute_anonymized_user(request)
@@ -32,7 +36,7 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
     @staticmethod
     def compute_anonymized_user(request):
         # By all means, yes, this is mostly useless
-        src_ip = request.META.get('REMOTE_ADDR').encode('utf-8') or '0.0.0.0'.encode('utf-8')
+        src_ip = request.META.get('REMOTE_ADDR', '').encode('utf-8') or '0.0.0.0'.encode('utf-8')
         salt = '90u4rnkdKJndf'.encode('utf-8')
         anonymized_user_id = hashlib.sha256(src_ip + salt).hexdigest()
         return anonymized_user_id
