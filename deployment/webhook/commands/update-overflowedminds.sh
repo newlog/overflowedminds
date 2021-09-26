@@ -49,4 +49,5 @@ rm "${PWD}/overflowedminds/frontend/.envs/.production/.react"
 mv "${PWD}/overflowedminds/frontend/.envs/.production/.react" "${PWD}/overflowedminds/frontend/.envs/.production/.react.bak"
 python3 "${PWD}/webhooks/commands/download_repo_file.py" "newlog" "overflowedminds-private" "frontend/.envs/.production/.react" "${PWD}/overflowedminds/frontend/.envs/.production/.react"
 
+docker-compose -f "${PWD}/production.yml" run --rm django python /app/manage.py migrate
 docker-compose -f "${PWD}/overflowedminds/production.yml" up -d
