@@ -48,7 +48,7 @@ function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const [likeClicked, setLikeClicked] = React.useState(false);
-    const [likes, setLikes] = React.useState(row.likes);
+    const [likes, setLikes] = React.useState(row.likes_count);
 
     const classes = useRowStyles();
 
@@ -58,14 +58,15 @@ function Row(props) {
     function LikeWriting(e) {
         const backend_slug = row.slug.substring(0, 59);  // in the backend the slug is cut to 59 characters
         setLikeClicked(!likeClicked);
-        if (!likeClicked) {
-            setLikes(likes + 1);
-            fetch(`${baseUrl}/api/writings/${backend_slug}/like/`);
-            //animateLike()
-        } else {
-            setLikes(likes - 1);
-            fetch(`${baseUrl}/api/writings/${backend_slug}/unlike/`);
-        }
+        fetch(`${baseUrl}/api/writings/${backend_slug}/like/`, {
+            method: 'POST',
+            body: ''
+        })
+        .then(res => res.json())
+        .then(res => setLikes(res.likes_count))
+        .catch(err => console.log(err));
+        
+        //animateLike()
     }
 
     return (

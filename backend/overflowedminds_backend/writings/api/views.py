@@ -1,17 +1,17 @@
-from django.db.models import F
+import hashlib
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from overflowedminds_backend.writings.api.serializers import WritingsListSerializer
-from overflowedminds_backend.writings.api.serializers import WritingsRetrieveSerializer
-from overflowedminds_backend.writings.models import Writing
+from overflowedminds_backend.writings.api.serializers import WritingsListSerializer, WritingsRetrieveSerializer
+from overflowedminds_backend.writings.models import Writing, AnonymizedUser
 
 
 class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Writing.objects.all()
     serializer_class = WritingsListSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     lookup_field = 'slug'
 
     action_serializers = {
@@ -24,24 +24,32 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
             return self.action_serializers.get(self.action, self.serializer_class)
         return super(WritingsViewSet, self).get_serializer_class()
 
-    @action(detail=True, methods=['GET'], name='Like a writing')
+    @action(detail=True, methods=['POST'], name='Like a writing')
     def like(self, request, slug):
-        return self.like_unlike('like')
+        anonymized_user_id = self.compute_anonymized_user(request)
+        return self.like_or_unlike(anonymized_user_id)
 
-    @action(detail=True, methods=['GET'], name='unlike a writing')
-    def unlike(self, request, slug):
-        return self.like_unlike('unlike')
+    @staticmethod
+    def compute_anonymized_user(request):
+        # By all means, yes, this is mostly useless
+        src_ip = request.META.get('REMOTE_ADDR').encode('utf-8') or '0.0.0.0'.encode('utf-8')
+        salt = '90u4rnkdKJndf'.encode('utf-8')
+        anonymized_user_id = hashlib.sha256(src_ip + salt).hexdigest()
+        return anonymized_user_id
 
-    def like_unlike(self, action):
+    def like_or_unlike(self, anonymized_user_id):
         writing = self.get_object()
         if writing:
-            if action == 'like':
-                if writing.likes < 10000000:
-                    writing.likes = F('likes') + 1
-                    writing.save()
-            else:
-                writing.likes = F('likes') - 1
-                writing.save()
-            return Response("Thanks for liking it!")
+            self.add_like(writing, anonymized_user_id)
+            return Response({'likes_count': writing.likes_count}, status.HTTP_200_OK)
         else:
-            return Response("Uops, writing could not be found", status.HTTP_404_NOT_FOUND)
+            return Response({}, status.HTTP_404_NOT_FOUND)
+
+    @staticmethod
+    def add_like(writing, anonymized_user_id):
+        anon_user_obj, created = AnonymizedUser.objects.get_or_create(identity=anonymized_user_id)
+        if not anon_user_obj.writing_set.filter(id=writing.id).exists():
+            writing.likes.add(anon_user_obj)
+        else:
+            writing.likes.remove(anon_user_obj)
+        writing.save()

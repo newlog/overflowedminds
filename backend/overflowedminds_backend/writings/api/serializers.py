@@ -15,7 +15,7 @@ class WritingsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Writing
         # no body field
-        fields = ['id', 'title', 'slug', 'description', 'publication_date', 'url', 'tags', 'writing_path', 'internal', 'likes']
+        fields = ['id', 'title', 'slug', 'description', 'publication_date', 'url', 'tags', 'writing_path', 'internal', 'likes_count']
         lookup_field = 'slug'
 
 

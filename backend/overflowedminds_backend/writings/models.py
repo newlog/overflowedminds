@@ -26,7 +26,7 @@ class Writing(TimeStampedModel):
     internal = models.BooleanField(default=False)
     url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField('Tag', default=None)
-    likes = models.PositiveIntegerField(default=0)
+    likes = models.ManyToManyField('AnonymizedUser')
 
     # noinspection PyMethodMayBeStatic
     def slugify_function(self, content):
@@ -39,11 +39,28 @@ class Writing(TimeStampedModel):
         else:
             return ""
 
+    @property
+    def likes_count(self):
+        return self.likes.count()
+
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['-publication_date']
+
+
+class AnonymizedUser(TimeStampedModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    identity = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return self.identity
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['id', 'identity'], name='Non repeated entries')
+        ]
 
 
 class Tag(TimeStampedModel):
