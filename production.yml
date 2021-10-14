@@ -39,15 +39,9 @@ services:
       - production_traefik:/etc/traefik/acme:z
       # Required for Traefik to listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    # https://github.com/traefik/traefik/issues/4352#issuecomment-452285978
-    # https://community.traefik.io/t/traefik-and-pihole-with-docker-forward-client-ip/9933/3?u=newlog
-    # unfortunately, we need to expose all the host network stack to this container so docker does not
-    # do handle networking itself for the container and traefik can get the client's IP
-    # https://docs.docker.com/network/host/
-    network_mode: host
-    #ports:
-    #  - 80:80
-    #  - 443:443
+    ports:
+      - "80:80"
+      - "443:443"
     env_file:
       - backend/.envs/.production/.traefik
     command: /start
