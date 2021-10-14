@@ -38,6 +38,11 @@ jobs:
           #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker-compose -f production.yml build
+          # here we docker tag all the images coming from previous build
+          # e.g. docker tag imagename imagename:v1.0
+          # e.g. docker tag imagename:v1.0 imagename:v1.1
+          # we push them one by one instead of whole push
+          # we need to move the step short_sha_step above this step
           docker-compose -f production.yml push
 
       - name: Get short commit SHA as v.hash
