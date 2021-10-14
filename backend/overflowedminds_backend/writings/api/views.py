@@ -36,10 +36,11 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
     @staticmethod
     def compute_anonymized_user(request):
         # By all means, yes, this is mostly useless
-        src_ip = request.META.get('X-Forwarded-For', '').encode('utf-8') or \
-                request.META.get('X-Real-Ip', '').encode('utf-8') or \
-                request.META.get('REMOTE_ADDR', '').encode('utf-8') or '0.0.0.0'.encode('utf-8')
-        print(f"Like click by: {src_ip}")
+        x_forwarded_for = request.META.get('X-Forwarded-For', '').encode('utf-8')
+        x_real_ip = request.META.get('X-Real-Ip', '').encode('utf-8')
+        remote_addr = request.META.get('REMOTE_ADDR', '').encode('utf-8')  # or '0.0.0.0'.encode('utf-8')
+        print(f"Like click by: x-forwarded-for: {x_forwarded_for}, x-real-ip: {x_real_ip}, remote_addr: {remote_addr}")
+        src_ip = request.META.get('X-Forwarded-For', '').encode('utf-8')
         salt = '90u4rnkdKJndf'.encode('utf-8')
         anonymized_user_id = hashlib.sha256(src_ip + salt).hexdigest()
         return anonymized_user_id
