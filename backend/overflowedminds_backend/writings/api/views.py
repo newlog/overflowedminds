@@ -37,6 +37,7 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
     def compute_anonymized_user(request):
         # By all means, yes, this is mostly useless
         src_ip = request.META.get('REMOTE_ADDR', '').encode('utf-8') or '0.0.0.0'.encode('utf-8')
+        print(f"Like click by: {src_ip}")
         salt = '90u4rnkdKJndf'.encode('utf-8')
         anonymized_user_id = hashlib.sha256(src_ip + salt).hexdigest()
         return anonymized_user_id
@@ -44,13 +45,13 @@ class WritingsViewSet(viewsets.ReadOnlyModelViewSet):
     def like_or_unlike(self, anonymized_user_id):
         writing = self.get_object()
         if writing:
-            self.add_like(writing, anonymized_user_id)
+            self.add_or_remove_like(writing, anonymized_user_id)
             return Response({'likes_count': writing.likes_count}, status.HTTP_200_OK)
         else:
             return Response({}, status.HTTP_404_NOT_FOUND)
 
     @staticmethod
-    def add_like(writing, anonymized_user_id):
+    def add_or_remove_like(writing, anonymized_user_id):
         anon_user_obj, created = AnonymizedUser.objects.get_or_create(identity=anonymized_user_id)
         if not anon_user_obj.writing_set.filter(id=writing.id).exists():
             writing.likes.add(anon_user_obj)
