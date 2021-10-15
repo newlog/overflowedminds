@@ -36,7 +36,7 @@ class WritingsListSerializer(serializers.ModelSerializer):
     @staticmethod
     def compute_anonymized_user(request):
         # By all means, yes, this is mostly useless
-        src_ip = request.META.get('REMOTE_ADDR', '').encode('utf-8') or '0.0.0.0'.encode('utf-8')
+        src_ip = request.headers.get('X-Real-Ip', '').encode('utf-8') or '0.0.0.0'.encode('utf-8')
         salt = '90u4rnkdKJndf'.encode('utf-8')
         anonymized_user_id = hashlib.sha256(src_ip + salt).hexdigest()
         return anonymized_user_id
