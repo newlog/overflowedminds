@@ -9,6 +9,7 @@ services:
       context: .
       dockerfile: compose/production/django/Dockerfile
     image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_django
+    restart: on-failure
     depends_on:
       - redis
       - frontend
@@ -22,6 +23,7 @@ services:
       context: .
       dockerfile: compose/production/frontend/Dockerfile
     image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_frontend
+    restart: on-failure
     env_file:
       - frontend/.envs/.production/.react
 
@@ -30,7 +32,7 @@ services:
       context: .
       dockerfile: compose/production/traefik/Dockerfile
     image: 282428440465.dkr.ecr.us-east-1.amazonaws.com/overflowedminds_production_traefik
-    restart: always
+    restart: on-failure
     depends_on:
       - django
     volumes:
@@ -52,6 +54,7 @@ services:
 
   redis:
     image: redis:5.0
+    restart: on-failure
   
   awscli:
     build:
